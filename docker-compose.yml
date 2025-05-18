@@ -17,11 +17,12 @@ services:
     build:
       context: ./frontend
       target: dev
-    env_file: ./frontend/.env
+    env_file: frontend/.env
     volumes:
       - ./frontend:/app
+      - /app/node_modules
     ports:
-      - "5000:5000"
+      - "5173:5173"
     depends_on:
       - backend
 
