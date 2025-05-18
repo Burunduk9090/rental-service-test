@@ -40,6 +40,7 @@ class ApartmentViewSet(viewsets.ModelViewSet):
         'availability': ['exact'],  # Фільтр за доступністю (True/False)
     }
     search_fields = ['name', 'description']  # Пошук за назвою та описом
+    lookup_field = 'slug'  # Змінюємо пошук з pk на slug
 
     def get_permissions(self):
         """
