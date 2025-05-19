@@ -10,7 +10,6 @@ class UserFactory(DjangoModelFactory):
     class Meta:
         model = User
 
-
     email = factory.Sequence(lambda n: f"{n}@example.com")
     password = factory.PostGenerationMethodCall('set_password', 'password123')
 
@@ -30,34 +29,32 @@ class ApartmentFactory(DjangoModelFactory):
 
 
 class Command(BaseCommand):
-    help = "Заповнює базу даних автоматичними даними для користувачів і квартир"
+    help = "Populates the database with automatic data for users and apartments"
 
     def add_arguments(self, parser):
         parser.add_argument(
             '--users',
             type=int,
             default=10,
-            help='Кількість користувачів для створення (за замовчуванням: 10)',
+            help='Number of users to create (default: 10)',
         )
         parser.add_argument(
             '--apartments_per_user',
             type=int,
             default=5,
-            help='Кількість квартир для кожного користувача (за замовчуванням: 5)',
+            help='Number of apartments for each user (default: 5)',
         )
 
     def handle(self, *args, **options):
         users_count = options['users']
         apartments_per_user = options['apartments_per_user']
 
-        # Створення користувачів
         users = UserFactory.create_batch(users_count)
-        self.stdout.write(f"Створено {users_count} користувачів.")
+        self.stdout.write(f"Created {users_count} users.")
 
-        # Створення квартир
         total_apartments = 0
         for user in users:
             apartments = ApartmentFactory.create_batch(apartments_per_user, owner=user)
             total_apartments += len(apartments)
 
-        self.stdout.write(f"Створено {total_apartments} квартир для користувачів.")
+        self.stdout.write(f"Created {total_apartments} apartments for users.")

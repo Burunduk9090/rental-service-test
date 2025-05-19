@@ -3,10 +3,6 @@ from apps.apartments.models import Apartment
 
 
 class ApartmentSerializer(serializers.ModelSerializer):
-    """
-    Серіалізатор для моделі Apartment
-    """
-
     class Meta:
         model = Apartment
         fields = [
